@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Management System</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Container for central layout */
+        .container {
+            max-width: 100%;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form container grid styling */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"], input[type="number"], input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Button styling */
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            color: #fff;
+            margin-right: 5px;
+            transition: background 0.3s;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button.btn-success {
+            background-color: #28a745;
+        }
+
+        button.btn-success:hover {
+            background-color: #218838;
+        }
+
+        button.btn-primary {
+            background-color: #007bff;
+        }
+
+        button.btn-primary:hover {
+            background-color: #0069d9;
+        }
+
+        button.btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        button.btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        button.btn-danger {
+            background-color: #dc3545;
+        }
+
+        button.btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #dee2e6;
+        }
+
+        thead {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Table button styling */
+        table button {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Field Management System</h1>
+
+        <!-- Form to input data with labels -->
+        <div class="form-row mb-3">
+            <div>
+                <label for="fieldCode">Field Code</label>
+                <input type="text" class="form-control" id="fieldCode" name="fieldCode" placeholder="Field Code">
+            </div>
+            <div>
+                <label for="fieldName">Field Name</label>
+                <input type="text" class="form-control" id="fieldName" name="fieldName" placeholder="Field Name">
+            </div>
+            <div>
+                <label for="fieldLocation">Field Location</label>
+                <input type="text" class="form-control" id="fieldLocation" name="fieldLocation" placeholder="Field Location">
+            </div>
+            <div>
+                <label for="fieldSize">Extent Size</label>
+                <input type="number" class="form-control" id="fieldSize" name="fieldSize" placeholder="Extent Size">
+            </div>
+            <div>
+                <label for="crops">Crops</label>
+                <input type="text" class="form-control" id="crops" name="crops" placeholder="Crops">
+            </div>
+            <div>
+                <label for="staff">Staff</label>
+                <input type="text" class="form-control" id="staff" name="staff" placeholder="Staff">
+            </div>
+            <!-- Optional image input field with label -->
+            <div>
+                <label for="fieldImage">Upload Image</label>
+                <input type="file" class="form-control" id="fieldImage" name="fieldImage">
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" onclick="saveField()">Save</button>
+            <button class="btn btn-primary" onclick="updateField()">Update</button>
+        </div>
+
+        <!-- Table to display data -->
+        <table class="table table-striped table-bordered" id="fieldTable">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Field Code</th>
+                    <th>Field Name</th>
+                    <th>Location</th>
+                    <th>Size</th>
+                    <th>Crops</th>
+                    <th>Staff</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- JavaScript functionality -->
+    <script>
+        let selectedRow = null;
+
+        function saveField() {
+            const fieldCode = document.getElementById('fieldCode').value;
+            const fieldName = document.getElementById('fieldName').value;
+            const fieldLocation = document.getElementById('fieldLocation').value;
+            const fieldSize = document.getElementById('fieldSize').value;
+            const crops = document.getElementById('crops').value;
+            const staff = document.getElementById('staff').value;
+
+            const table = document.getElementById('fieldTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            newRow.insertCell(0).innerHTML = fieldCode;
+            newRow.insertCell(1).innerHTML = fieldName;
+            newRow.insertCell(2).innerHTML = fieldLocation;
+            newRow.insertCell(3).innerHTML = fieldSize;
+            newRow.insertCell(4).innerHTML = crops;
+            newRow.insertCell(5).innerHTML = staff;
+            newRow.insertCell(6).innerHTML = `<button class="btn btn-warning btn-sm" onclick="editField(this)">Edit</button>
+                                               <button class="btn btn-danger btn-sm" onclick="deleteField(this)">Delete</button>`;
+            resetForm();
+        }
+
+        function editField(button) {
+            selectedRow = button.parentElement.parentElement;
+            document.getElementById('fieldCode').value = selectedRow.cells[0].innerHTML;
+            document.getElementById('fieldName').value = selectedRow.cells[1].innerHTML;
+            document.getElementById('fieldLocation').value = selectedRow.cells[2].innerHTML;
+            document.getElementById('fieldSize').value = selectedRow.cells[3].innerHTML;
+            document.getElementById('crops').value = selectedRow.cells[4].innerHTML;
+            document.getElementById('staff').value = selectedRow.cells[5].innerHTML;
+        }
+
+        function updateField() {
+            if (selectedRow) {
+                selectedRow.cells[0].innerHTML = document.getElementById('fieldCode').value;
+                selectedRow.cells[1].innerHTML = document.getElementById('fieldName').value;
+                selectedRow.cells[2].innerHTML = document.getElementById('fieldLocation').value;
+                selectedRow.cells[3].innerHTML = document.getElementById('fieldSize').value;
+                selectedRow.cells[4].innerHTML = document.getElementById('crops').value;
+                selectedRow.cells[5].innerHTML = document.getElementById('staff').value;
+                resetForm();
+                selectedRow = null;
+            } else {
+                alert('Please select a row to update.');
+            }
+        }
+
+        function deleteField(button) {
+            const row = button.parentElement.parentElement;
+            row.parentNode.removeChild(row);
+            resetForm();
+        }
+
+        function resetForm() {
+            document.getElementById('fieldCode').value = '';
+            document.getElementById('fieldName').value = '';
+            document.getElementById('fieldLocation').value = '';
+            document.getElementById('fieldSize').value = '';
+            document.getElementById('crops').value = '';
+            document.getElementById('staff').value = '';
+        }
+    </script>
+</body>
+</html>

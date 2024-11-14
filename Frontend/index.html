@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Management</title>
+    <link rel="stylesheet" href="/index.css">
+</head>
+<body>
+
+    <h2>Field Management</h2>
+    
+    <form id="fieldForm">
+        <div class="form-group">
+            <label for="fieldCode">Field Code:</label>
+            <input type="text" id="fieldCode" name="fieldCode" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="fieldName">Name:</label>
+            <input type="text" id="fieldName" name="fieldName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+        </div>
+
+        <div class="form-group">
+            <label for="size">Size:</label>
+            <input type="text" id="size" name="size" required>
+        </div>
+
+        <div class="form-group">
+            <label for="image1">Image 01:</label>
+            <input type="file" id="image1" name="image1" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <label for="image2">Image 02:</label>
+            <input type="file" id="image2" name="image2" accept="image/*">
+        </div>
+
+        <div class="button-group">
+            <button type="button" onclick="saveField()">Save</button>
+            <button type="button" onclick="updateField()">Update</button>
+            <button type="button" onclick="deleteField()">Delete</button>
+            <button type="button" onclick="searchField()">Search</button>
+        </div>
+    </form>
+
+    <script>
+        // Placeholder functions for Save, Update, Delete, and Search
+        function saveField() {
+            alert("Field saved successfully!");
+            // Add code to save field data here
+        }
+
+        function updateField() {
+            alert("Field updated successfully!");
+            // Add code to update field data here
+        }
+
+        function deleteField() {
+            alert("Field deleted successfully!");
+            // Add code to delete field data here
+        }
+
+        function searchField() {
+            alert("Searching for field...");
+            // Add code to search field data here
+        }
+    </script>
+
+</body>
+</html>

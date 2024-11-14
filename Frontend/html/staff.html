@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Data</title>
+    <link rel="stylesheet" href="/css/Staff.css">
+    <script>
+        function loadContent(page) {
+            fetch(page)
+                .then(response => response.text())
+                .then(html => {
+                    document.querySelector('.container').innerHTML = html;
+                })
+                .catch(error => console.log('Error loading content:', error));
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('add').addEventListener('click', function (e) {
+                e.preventDefault();
+                loadContent('/index.html');
+            });
+        });    
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Employee Data</h1>
+            <p>This component demonstrates CRUD operations on Employee data</p>
+            <button  id="addEmployeeBtn" class="btn blue">Add Employee</button>
+            <a href="/index.html">add</a>
+            <input type="text" id="searchBox" placeholder="Search">
+            <button class="btn teal">Filter</button>
+        </header>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Department</th>
+                    <th>City</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="employeeTableBody">
+                <!-- Rows will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- <script src="/js/staff.js"></script> -->
+</body>
+</html>
