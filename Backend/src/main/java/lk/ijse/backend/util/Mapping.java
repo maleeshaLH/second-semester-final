@@ -1,6 +1,9 @@
 package lk.ijse.backend.util;
 
+import lk.ijse.backend.dao.StaffDao;
+import lk.ijse.backend.dto.impl.StaffDto;
 import lk.ijse.backend.dto.impl.VehicleDto;
+import lk.ijse.backend.entity.StaffEntity;
 import lk.ijse.backend.entity.VehicleEntity;
 
 import org.modelmapper.ModelMapper;
@@ -15,7 +18,7 @@ public class Mapping {
    @Autowired
     private ModelMapper modelMapper;
 
-    //matters of NoteEntity and DTO
+    //matters of VehicleEntity and DTO
     public VehicleDto convertToVehicleDTO(VehicleEntity vehicleEntity) {
         return modelMapper.map(vehicleEntity, VehicleDto.class);
     }
@@ -26,6 +29,17 @@ public class Mapping {
         return modelMapper.map(notes, new TypeToken<List<VehicleDto>>(){}.getType());
     }
 
+    //matters of VehicleEntity and DTO
+    public StaffDto convertToStaffDTO(StaffEntity Entity) {
+        return modelMapper.map(Entity, StaffDto.class);
+    }
+
+    public List<StaffDto> convertToStaffDTO(List<StaffEntity> notes) {
+        return modelMapper.map(notes, new TypeToken<List<StaffDto>>(){}.getType());
+    }
+    public StaffEntity convertToStaffEntity(StaffDto dto) {
+        return modelMapper.map(dto, StaffEntity.class);
+    }
 
 
 }
