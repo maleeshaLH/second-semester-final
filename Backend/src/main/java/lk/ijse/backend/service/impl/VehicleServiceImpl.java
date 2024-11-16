@@ -57,13 +57,12 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void deleteVehicle(String code) {
-        vehicleDao.deleteById(code);
 
         Optional<VehicleEntity> selectedUserId = vehicleDao.findById(code);
-        if(selectedUserId.isPresent()){
+        if(selectedUserId.isEmpty()){
             throw new DataPersistFailedException("Vehicle not found");
-        }else {
-            vehicleDao.deleteById(code);
         }
+            vehicleDao.deleteById(code);
+
     }
 }
