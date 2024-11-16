@@ -1,8 +1,10 @@
 package lk.ijse.backend.util;
 
 import lk.ijse.backend.dao.StaffDao;
+import lk.ijse.backend.dto.impl.FieldDto;
 import lk.ijse.backend.dto.impl.StaffDto;
 import lk.ijse.backend.dto.impl.VehicleDto;
+import lk.ijse.backend.entity.FiledEntity;
 import lk.ijse.backend.entity.StaffEntity;
 import lk.ijse.backend.entity.VehicleEntity;
 
@@ -29,7 +31,7 @@ public class Mapping {
         return modelMapper.map(notes, new TypeToken<List<VehicleDto>>(){}.getType());
     }
 
-    //matters of VehicleEntity and DTO
+    //matters of StaffEntity and DTO
     public StaffDto convertToStaffDTO(StaffEntity Entity) {
         return modelMapper.map(Entity, StaffDto.class);
     }
@@ -39,6 +41,18 @@ public class Mapping {
     }
     public StaffEntity convertToStaffEntity(StaffDto dto) {
         return modelMapper.map(dto, StaffEntity.class);
+    }
+
+    //matters of FiledEntity and DTO
+    public FieldDto convertToFiledDTO(FiledEntity Entity) {
+        return modelMapper.map(Entity, FieldDto.class);
+    }
+
+    public List<FieldDto> convertToFiledDTO(List<FiledEntity> notes) {
+        return modelMapper.map(notes, new TypeToken<List<FieldDto>>(){}.getType());
+    }
+    public FiledEntity convertToFiledEntity(FieldDto dto) {
+        return modelMapper.map(dto, FiledEntity.class);
     }
 
 
