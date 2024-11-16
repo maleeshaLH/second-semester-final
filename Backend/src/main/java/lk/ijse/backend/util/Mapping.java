@@ -1,8 +1,10 @@
 package lk.ijse.backend.util;
 
+import lk.ijse.backend.dto.impl.CropDto;
 import lk.ijse.backend.dto.impl.FieldDto;
 import lk.ijse.backend.dto.impl.StaffDto;
 import lk.ijse.backend.dto.impl.VehicleDto;
+import lk.ijse.backend.entity.impl.CropEntity;
 import lk.ijse.backend.entity.impl.FiledEntity;
 import lk.ijse.backend.entity.impl.StaffEntity;
 import lk.ijse.backend.entity.impl.VehicleEntity;
@@ -52,6 +54,18 @@ public class Mapping {
     }
     public FiledEntity convertToFiledEntity(FieldDto dto) {
         return modelMapper.map(dto, FiledEntity.class);
+    }
+
+    //matters of CropEntity and DTO
+    public CropDto convertToCropDTO(CropEntity Entity) {
+        return modelMapper.map(Entity, CropDto.class);
+    }
+
+    public List<CropDto> convertToCropDTO(List<CropEntity> notes) {
+        return modelMapper.map(notes, new TypeToken<List<CropDto>>(){}.getType());
+    }
+    public CropEntity convertToCropEntity(CropDto dto) {
+        return modelMapper.map(dto, CropEntity.class);
     }
 
 
