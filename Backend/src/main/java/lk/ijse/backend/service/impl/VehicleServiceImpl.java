@@ -3,12 +3,11 @@ package lk.ijse.backend.service.impl;
 import jakarta.transaction.Transactional;
 import lk.ijse.backend.dao.VehicleDao;
 import lk.ijse.backend.dto.impl.VehicleDto;
-import lk.ijse.backend.entity.VehicleEntity;
+import lk.ijse.backend.entity.impl.VehicleEntity;
 import lk.ijse.backend.exception.DataPersistFailedException;
 import lk.ijse.backend.service.VehicleService;
 import lk.ijse.backend.util.Mapping;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

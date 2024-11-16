@@ -1,12 +1,11 @@
 package lk.ijse.backend.util;
 
-import lk.ijse.backend.dao.StaffDao;
 import lk.ijse.backend.dto.impl.FieldDto;
 import lk.ijse.backend.dto.impl.StaffDto;
 import lk.ijse.backend.dto.impl.VehicleDto;
-import lk.ijse.backend.entity.FiledEntity;
-import lk.ijse.backend.entity.StaffEntity;
-import lk.ijse.backend.entity.VehicleEntity;
+import lk.ijse.backend.entity.impl.FiledEntity;
+import lk.ijse.backend.entity.impl.StaffEntity;
+import lk.ijse.backend.entity.impl.VehicleEntity;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;

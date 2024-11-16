@@ -1,6 +1,7 @@
-package lk.ijse.backend.entity;
+package lk.ijse.backend.entity.impl;
 
 import jakarta.persistence.*;
+import lk.ijse.backend.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

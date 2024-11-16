@@ -2,13 +2,11 @@ package lk.ijse.backend.service.impl;
 
 import lk.ijse.backend.dao.StaffDao;
 import lk.ijse.backend.dto.impl.StaffDto;
-import lk.ijse.backend.entity.StaffEntity;
-import lk.ijse.backend.entity.VehicleEntity;
+import lk.ijse.backend.entity.impl.StaffEntity;
 import lk.ijse.backend.exception.DataPersistFailedException;
 import lk.ijse.backend.service.StaffService;
 import lk.ijse.backend.util.Mapping;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

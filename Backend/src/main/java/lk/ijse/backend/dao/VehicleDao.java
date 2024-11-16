@@ -1,6 +1,6 @@
 package lk.ijse.backend.dao;
 
-import lk.ijse.backend.entity.VehicleEntity;
+import lk.ijse.backend.entity.impl.VehicleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,10 @@
-package lk.ijse.backend.entity;
+package lk.ijse.backend.entity.impl;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lk.ijse.backend.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "field")
-public class FiledEntity implements SuperEntity{
+public class FiledEntity implements SuperEntity {
     @Id
     private String fieldCode;
     private String fieldName;

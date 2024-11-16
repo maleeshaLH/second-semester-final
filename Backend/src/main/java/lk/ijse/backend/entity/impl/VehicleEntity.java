@@ -1,9 +1,10 @@
-package lk.ijse.backend.entity;
+package lk.ijse.backend.entity.impl;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lk.ijse.backend.entity.SuperEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "vehicle")
-public class VehicleEntity implements SuperEntity{
+public class VehicleEntity implements SuperEntity {
     @Id
     private String vehicleCode;
     private String licensePlateNumber;
