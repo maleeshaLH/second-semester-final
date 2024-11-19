@@ -1,0 +1,10 @@
+body {
+    padding: 20px;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+}
+.table-responsive {
+    overflow-x: auto;
+}
