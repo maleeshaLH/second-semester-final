@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/field")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 public class FieldController {
 
     @Autowired
@@ -26,9 +27,9 @@ public class FieldController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveFiled(
-            @RequestPart("fieldCode") String fieldCode,
-            @RequestPart("fieldName") String fieldName,
-            @RequestPart("fieldLocation") String  fieldLocation,
+            @RequestParam("fieldCode") String fieldCode,
+            @RequestParam("fieldName") String fieldName,
+            @RequestParam("fieldLocation") String  fieldLocation,
             @RequestParam("extentSize")Double extentSize,
             @RequestPart("fieldImage1") MultipartFile fieldImage1,
             @RequestPart("fieldImage2")MultipartFile fieldImage2
