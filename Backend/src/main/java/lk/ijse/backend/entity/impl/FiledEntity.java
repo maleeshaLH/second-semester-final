@@ -27,4 +27,7 @@ public class FiledEntity implements SuperEntity {
     @OneToMany(mappedBy = "fields")
     private List<CropEntity> crops = new ArrayList<>();
 
+    @OneToMany(mappedBy = "fields")
+    private List<EquipmentEntity> equipmentList = new ArrayList<>();
+
 }

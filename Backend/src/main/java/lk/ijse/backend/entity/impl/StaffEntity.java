@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,4 +37,7 @@ public class StaffEntity implements SuperEntity {
     @ManyToOne
     @JoinColumn(name = "vehicleCode", insertable = false, updatable = false) // Mark as non-insertable and non-updatable
     private VehicleEntity vehicles;
+
+    @OneToMany(mappedBy = "staffs")
+    private List<EquipmentEntity> equipmentList = new ArrayList<>();
 }

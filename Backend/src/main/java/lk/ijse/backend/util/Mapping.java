@@ -1,13 +1,7 @@
 package lk.ijse.backend.util;
 
-import lk.ijse.backend.dto.impl.CropDto;
-import lk.ijse.backend.dto.impl.FieldDto;
-import lk.ijse.backend.dto.impl.StaffDto;
-import lk.ijse.backend.dto.impl.VehicleDto;
-import lk.ijse.backend.entity.impl.CropEntity;
-import lk.ijse.backend.entity.impl.FiledEntity;
-import lk.ijse.backend.entity.impl.StaffEntity;
-import lk.ijse.backend.entity.impl.VehicleEntity;
+import lk.ijse.backend.dto.impl.*;
+import lk.ijse.backend.entity.impl.*;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -66,6 +60,18 @@ public class Mapping {
     }
     public CropEntity convertToCropEntity(CropDto dto) {
         return modelMapper.map(dto, CropEntity.class);
+    }
+
+    //matters of EquipmentEntity and DTO
+    public EquipmentDto convertToEquipmentDTO(EquipmentEntity Entity) {
+        return modelMapper.map(Entity, EquipmentDto.class);
+    }
+
+    public List<EquipmentDto> convertToEquipmentDTO(List<EquipmentEntity> notes) {
+        return modelMapper.map(notes, new TypeToken<List<EquipmentDto>>(){}.getType());
+    }
+    public EquipmentEntity convertToEquipmentEntity(EquipmentDto dto) {
+        return modelMapper.map(dto, EquipmentEntity.class);
     }
 
 
