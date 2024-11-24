@@ -3,6 +3,7 @@ package lk.ijse.backend.util;
 import lk.ijse.backend.dto.impl.*;
 import lk.ijse.backend.entity.impl.*;
 
+import org.apache.commons.logging.Log;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,17 @@ public class Mapping {
     }
     public EquipmentEntity convertToEquipmentEntity(EquipmentDto dto) {
         return modelMapper.map(dto, EquipmentEntity.class);
+    }
+
+    //matters of Log Monitoring and DTO
+    public LogMonitoringDto convertToLogMonitoringDTO(LogMonitoringEntity Entity) {
+        return modelMapper.map(Entity, LogMonitoringDto.class);
+    }
+    public List<LogMonitoringDto> convertToLogMonitoringDTO(List<LogMonitoringEntity> notes) {
+        return modelMapper.map(notes, new TypeToken<List<LogMonitoringDto>>(){}.getType());
+    }
+    public LogMonitoringEntity convertToLogMonitoringEntity(LogMonitoringDto dto) {
+        return modelMapper.map(dto, LogMonitoringEntity.class);
     }
 
 
