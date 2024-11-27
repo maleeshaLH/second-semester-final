@@ -13,4 +13,6 @@ public interface FieldService  {
     void saveFiled(FieldDto build);
 
     void updateFiled(FieldDto build);
+
+    FieldDto getFiledByCode(String fieldCode);
 }

@@ -110,5 +110,19 @@ public class FieldController {
 
 
     }
+    @GetMapping("/{fieldCode}")
+    public ResponseEntity<FieldDto> getField(@PathVariable("fieldCode") String fieldCode) {
+        try {
+            FieldDto fieldDto = fieldService.getFiledByCode(fieldCode);
+            if (fieldDto == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(fieldDto, HttpStatus.OK);
+        } catch (FiledNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

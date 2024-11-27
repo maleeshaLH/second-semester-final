@@ -30,6 +30,15 @@ public class FieldServiceImpl implements FieldService {
         List<FiledEntity> getAllField = fieldDao.findAll();
         return mapping.convertToFiledDTO(getAllField);
     }
+    @Override
+    public FieldDto getFiledByCode(String fieldCode) {
+        Optional<FiledEntity> fieldEntity = fieldDao.findById(fieldCode);
+        if (fieldEntity.isPresent()) {
+            return mapping.convertToFiledDTO(fieldEntity.get()); // Convert to DTO and return
+        } else {
+            throw new DataPersistFailedException("Field not found"); // Or a custom exception if needed
+        }
+    }
 
     @Override
     public void deleteField(String fieldcode) {
