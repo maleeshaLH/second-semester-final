@@ -1,7 +1,12 @@
 $(document).ready(function() {
     loadStaff();
 
-    $('#staffForm').on('submit', function(e) {
+    loadVehicleCodes();
+
+            
+    const STAFF_URL = "http://localhost:5050/controller/api/v1/staff";
+
+    $('#saveButton').on('click', function(e) {
         e.preventDefault();
 
         let staffData = {
@@ -23,33 +28,139 @@ $(document).ready(function() {
             vehicleCode: $('#vehicleCode').val()
         };
 
-        let url = staffData.id ? `api/v1/staff/${staffData.id}` : 'api/v1/staff';
-        let method = staffData.id ? 'PATCH' : 'POST';
+        
 
         $.ajax({
             url: "http://localhost:5050/controller/api/v1/staff",
             method: "POST",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
             contentType: 'application/json',
             data: JSON.stringify(staffData),
             success: function(response) {
                 $('#staffModal').modal('hide');
+                alert("Staff added successfully!");
                 loadStaff();
+                
             },
-            error: function(error) {
-                console.log(error);
-            }
+            error: function (xhr) {
+                if (xhr.status === 401) {
+                  // Handle session expiration
+                  if (confirm("Session expired. Please log in again.")) {
+                    window.location.href = "/index.html";
+                  }
+                } else if (xhr.status === 403) {
+                  // Handle insufficient permissions
+                  alert("You do not have permission to perform this action.");
+                } else {
+                  // Handle other errors
+                  alert("Error saving staff: " + (xhr.responseText || "An unexpected error occurred."));
+                }
+            },
         });
     });
+
+    $('#updateButton').on('click', function(e) {
+        e.preventDefault();
+        const id = $("#staffId").val();
+
+        let staffData = {
+            id: $('#staffId').val(),
+            firstName: $('#firstName').val(),
+            lastName: $('#lastName').val(),
+            designation: $('#designation').val(),
+            gender: $('#gender').val(),
+            joinedDate: $('#joinedDate').val(),
+            dob: $('#dob').val(),
+            role: $('#role').val(),
+            addressLine01: $('#addressLine01').val(),
+            addressLine02: $('#addressLine02').val(),
+            addressLine03: $('#addressLine03').val(),
+            addressLine04: $('#addressLine04').val(),
+            addressLine05: $('#addressLine05').val(),
+            contactNo: $('#contactNo').val(),
+            email: $('#email').val(),
+            vehicleCode: $('#vehicleCode').val()
+        };
+
+        
+
+        $.ajax({
+            url: `${STAFF_URL}/${id}`,
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            contentType: 'application/json',
+            data: JSON.stringify(staffData),
+            success: function(response) {
+                $('#staffModal').modal('hide');
+                alert("Staff added successfully!");
+                loadStaff();
+                
+            },
+            error: function (xhr) {
+                if (xhr.status === 401) {
+                  // Handle session expiration
+                  if (confirm("Session expired. Please log in again.")) {
+                    window.location.href = "/index.html";
+                  }
+                } else if (xhr.status === 403) {
+                  // Handle insufficient permissions
+                  alert("You do not have permission to perform this action.");
+                } else {
+                  // Handle other errors
+                  alert("Error saving staff: " + (xhr.responseText || "An unexpected error occurred."));
+                }
+            },
+        });
+    });
+
+
+    function loadVehicleCodes() {
+        $.ajax({
+          url: 'http://localhost:5050/controller/api/v1/vehicle',
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          success: function (response) {
+            const vehicleCodeDropdown = $('#vehicleCode');
+            vehicleCodeDropdown.empty();
+            vehicleCodeDropdown.append('<option value="" disabled selected>Select Vehicle Code</option>');
+    
+            response.forEach(function (vehicle) {
+              vehicleCodeDropdown.append(`<option value="${vehicle.vehicleCode}">${vehicle.vehicleCode}</option>`);
+            });
+          },
+          error: function (xhr) {
+            if (xhr.status === 401) 
+              // Handle session expiration
+              if (confirm("Session expired. Please log in again.")) {
+                window.location.href = "/index.html";
+              }
+            else {
+              // Handle other errors
+              alert("Error retrieving field list : " + (xhr.responseText || "An unexpected error occurred."));
+            }
+          },
+        });
+      }
 
     function loadStaff() {
         $.ajax({
             url: "http://localhost:5050/controller/api/v1/staff",
             method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
             success: function(response) {
                 $('#staffTableBody').empty();
                 response.forEach(function(staff) {
                     $('#staffTableBody').append(`
                         <tr>
+                            <td>${staff.id}</td>
                             <td>${staff.firstName}</td>
                             <td>${staff.lastName}</td>
                             <td>${staff.designation}</td>
@@ -69,9 +180,17 @@ $(document).ready(function() {
                     `);
                 });
             },
-            error: function(error) {
-                console.log(error);
-            }
+            error: function (xhr) {
+                if (xhr.status === 401) 
+                  // Handle session expiration
+                  if (confirm("Session expired. Please log in again.")) {
+                    window.location.href = "/index.html";
+                  }
+                else {
+                  // Handle other errors
+                  alert("Error retrieving field list : " + (xhr.responseText || "An unexpected error occurred."));
+                }
+              },
         });
     }
 
@@ -79,6 +198,9 @@ $(document).ready(function() {
         $.ajax({
             url: `http://localhost:5050/controller/api/v1/staff/${id}`,
             method: 'GET',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
             success: function(response) {
                 $('#staffId').val(response.id);
                 $('#firstName').val(response.firstName);
@@ -97,23 +219,64 @@ $(document).ready(function() {
                 $('#email').val(response.email);
                 $('#vehicleCode').val(response.vehicleCode);
                 $('#staffModal').modal('show');
+
+                // Update modal title
+            $("#saveButton").hide();
+            $("#updateButton").show();
+            $("#staffModalLabel").text("Edit Staff");
+            $("#staffModal").modal("show");
             },
-            error: function(error) {
-                console.log(error);
-            }
+            error: function (xhr) {
+                if (xhr.status === 401) 
+                  // Handle session expiration
+                  if (confirm("Session expired. Please log in again.")) {
+                    window.location.href = "/index.html";
+                  }
+                else {
+                  // Handle other errors
+                  alert("Error retrieving field list : " + (xhr.responseText || "An unexpected error occurred."));
+                }
+            },
         });
     };
 
+    // Reset Vehicle Form
+function resetVehicleForm() {
+    $("#staffForm")[0].reset();
+    $("#staffId").prop("readonly", false);
+    $("#saveButton").show();
+    $("#updateButton").hide();
+    $("#staffModalLabel").text("Add Vehicle");
+}
+
     window.deleteStaff = function(id) {
-        $.ajax({
-            url: `api/v1/staff/${id}`,
-            method: 'DELETE',
-            success: function(response) {
-                loadStaff();
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
+        if (confirm("Are you sure you want to delete this staff ?")) {
+            $.ajax({
+                url: `${STAFF_URL}/${id}`,
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                },
+                success: function(response) {
+                    alert("Staff deleted successfully!");
+                    loadStaff();
+                },
+                error: function (xhr) {
+                    if (xhr.status === 401) {
+                    // Handle session expiration
+                    if (confirm("Session expired. Please log in again.")) {
+                        window.location.href = "/index.html";
+                    }
+                    } else if (xhr.status === 403) {
+                    // Handle insufficient permissions
+                    alert("You do not have permission to perform this action.");
+                    } else {
+                    // Handle other errors
+                    alert("Error deleting vehicle: " + (xhr.responseText || "An unexpected error occurred."));
+                    }
+                },
+            });
+
+        }
     };
 });
