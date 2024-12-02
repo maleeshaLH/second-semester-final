@@ -71,4 +71,19 @@ public class StaffController {
     public List<StaffDto> getAllStaff(){
         return staffService.getAllStaff();
     }
+
+    @GetMapping("/{staffId}")
+    public ResponseEntity<StaffDto> getStaff(@PathVariable("staffId") String staffId) {
+        try {
+            StaffDto staffDto = staffService.getStaffById(staffId);
+            if (staffDto == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(staffDto, HttpStatus.OK);
+        } catch (DataPersistFailedException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -13,4 +13,5 @@ public interface StaffService  {
 
     List<StaffDto> getAllStaff();
 
+    StaffDto getStaffById(String staffId);
 }

@@ -4,6 +4,7 @@ import lk.ijse.backend.dao.StaffDao;
 import lk.ijse.backend.dto.impl.StaffDto;
 import lk.ijse.backend.entity.impl.CropEntity;
 import lk.ijse.backend.entity.impl.StaffEntity;
+import lk.ijse.backend.entity.impl.VehicleEntity;
 import lk.ijse.backend.exception.DataPersistFailedException;
 import lk.ijse.backend.service.StaffService;
 import lk.ijse.backend.util.Mapping;
@@ -76,5 +77,15 @@ public class StaffServiceImpl implements StaffService {
     public List<StaffDto> getAllStaff() {
         List<StaffEntity> getAllStaff = staffDao.findAll();
         return mapping.convertToStaffDTO(getAllStaff);
+    }
+
+    @Override
+    public StaffDto getStaffById(String staffId) {
+        Optional<StaffEntity> staffEntity = staffDao.findById(staffId);
+        if (staffEntity.isPresent()) {
+            return mapping.convertToStaffDTO(staffEntity.get()); // Convert to DTO and return
+        } else {
+            throw new DataPersistFailedException("Staff not found"); // Or a custom exception if needed
+        }
     }
 }
