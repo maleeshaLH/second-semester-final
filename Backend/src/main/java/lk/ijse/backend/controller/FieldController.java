@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,12 +20,13 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/field")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "http://127.0.0.1:5502")
 public class FieldController {
 
     @Autowired
     private final FieldService fieldService;
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'SCIENTIST')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveFiled(
             @RequestParam("fieldCode") String fieldCode,
@@ -59,6 +61,7 @@ public class FieldController {
 
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @DeleteMapping("/{fieldcode}")
     public ResponseEntity<Void> deleteFiled(@PathVariable ("fieldcode") String fieldcode) {
         try {
@@ -77,6 +80,7 @@ public class FieldController {
     }
 
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @PatchMapping(value = "/{fieldCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateFiled(
             @PathVariable("fieldCode") String fieldCode,

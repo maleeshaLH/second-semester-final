@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,11 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/logmonitoring")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "http://127.0.0.1:5502")
 public class LogMonitoringController {
     @Autowired
     private final LogMonitoringService logMonitoringService;
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveLogMonitoring(
             @RequestParam("logCode") String logCode,
@@ -67,6 +69,7 @@ public class LogMonitoringController {
         return new ResponseEntity<>(logs, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @PatchMapping(value = "/{logCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> updateLogMonitoring(
             @PathVariable("logCode") String logCode,
@@ -97,6 +100,7 @@ public class LogMonitoringController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @DeleteMapping(value = "/{logCode}")
     public ResponseEntity<Void> deleteLogMonitoring(@PathVariable("logCode") String logCode) {
         try {

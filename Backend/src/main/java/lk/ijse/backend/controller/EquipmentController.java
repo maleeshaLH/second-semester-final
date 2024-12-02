@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,11 +18,12 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/equipment")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "http://127.0.0.1:5502")
 public class EquipmentController {
     @Autowired
     private final EquipmentService equipmentService;
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveEquipment(@RequestBody EquipmentDto equipmentDto) {
         try {
@@ -34,6 +36,7 @@ public class EquipmentController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @PatchMapping(value = "/{equipmentid}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateEquipment(@PathVariable("equipmentid") String equipmentId,@RequestBody EquipmentDto equipmentDto) {
         try {
@@ -51,6 +54,7 @@ public class EquipmentController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'ADMINISTRATIVE')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEquipment(@PathVariable("id") String id) {
         try {

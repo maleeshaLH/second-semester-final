@@ -2,6 +2,7 @@ package lk.ijse.backend.service.impl;
 
 import lk.ijse.backend.dao.StaffDao;
 import lk.ijse.backend.dto.impl.StaffDto;
+import lk.ijse.backend.entity.impl.CropEntity;
 import lk.ijse.backend.entity.impl.StaffEntity;
 import lk.ijse.backend.exception.DataPersistFailedException;
 import lk.ijse.backend.service.StaffService;
@@ -61,16 +62,15 @@ public class StaffServiceImpl implements StaffService {
 
     @Override
     public void deleteStaff(String id) {
-        staffDao.deleteById(id);
+//        staffDao.deleteById(id);
         Optional<StaffEntity> selectedUserId = staffDao.findById(id);
         if(selectedUserId.isEmpty()){
             throw new DataPersistFailedException("Staff not found");
         }
         staffDao.deleteById(id);
-
-
-
     }
+
+
 
     @Override
     public List<StaffDto> getAllStaff() {

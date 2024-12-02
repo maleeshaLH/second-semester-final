@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -24,4 +27,7 @@ public class CropEntity implements SuperEntity {
     @ManyToOne
     @JoinColumn(name = "fieldCode", insertable = false, updatable = false)
     private FiledEntity fields;
+    @OneToMany(mappedBy = "crops")
+    private List<LogMonitoringEntity> logMonitoringEntities = new ArrayList<>();
+
 }

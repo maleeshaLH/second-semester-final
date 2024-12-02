@@ -13,4 +13,6 @@ public interface CropService {
     void deleteCrop(String cropcode);
 
     void saveCrop(CropDto build);
+
+    CropDto getCropByCode(String cropCode);
 }

@@ -40,4 +40,6 @@ public class StaffEntity implements SuperEntity {
 
     @OneToMany(mappedBy = "staffs")
     private List<EquipmentEntity> equipmentList = new ArrayList<>();
+    @OneToMany(mappedBy = "staffs")
+    private List<LogMonitoringEntity> logMonitoringEntities = new ArrayList<>();
 }

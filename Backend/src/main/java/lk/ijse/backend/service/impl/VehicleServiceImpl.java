@@ -3,6 +3,7 @@ package lk.ijse.backend.service.impl;
 import jakarta.transaction.Transactional;
 import lk.ijse.backend.dao.VehicleDao;
 import lk.ijse.backend.dto.impl.VehicleDto;
+import lk.ijse.backend.entity.impl.CropEntity;
 import lk.ijse.backend.entity.impl.VehicleEntity;
 import lk.ijse.backend.exception.DataPersistFailedException;
 import lk.ijse.backend.service.VehicleService;
@@ -63,5 +64,15 @@ public class VehicleServiceImpl implements VehicleService {
         }
             vehicleDao.deleteById(code);
 
+    }
+
+    @Override
+    public VehicleDto getVehicleByCode(String vehicleCode) {
+        Optional<VehicleEntity> vehicleEntity = vehicleDao.findById(vehicleCode);
+        if (vehicleEntity.isPresent()) {
+            return mapping.convertToVehicleDTO(vehicleEntity.get()); // Convert to DTO and return
+        } else {
+            throw new DataPersistFailedException("Vehicle not found"); // Or a custom exception if needed
+        }
     }
 }

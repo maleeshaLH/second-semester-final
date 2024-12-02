@@ -2,6 +2,7 @@ package lk.ijse.backend.controller;
 
 import lk.ijse.backend.dto.impl.CropDto;
 import lk.ijse.backend.dto.impl.FieldDto;
+import lk.ijse.backend.exception.CropNotFoundException;
 import lk.ijse.backend.exception.DataPersistFailedException;
 import lk.ijse.backend.exception.FiledNotFoundException;
 import lk.ijse.backend.service.CropService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,13 +21,14 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/crop")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "http://127.0.0.1:5502")
 
 public class CropController {
 
     @Autowired
     private final CropService cropService;
 
+    @PreAuthorize("hasAnyRole('MANAGER', 'SCIENTIST')")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> saveCrop(
             @RequestPart("cropCode")String  cropCode,
@@ -74,6 +77,21 @@ public class CropController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDto> getAllCrop(){
         return cropService.getAllCrop();
+    }
+
+    @GetMapping("/{cropCode}")
+    public ResponseEntity<CropDto> getCrops(@PathVariable("cropCode") String cropCode) {
+        try {
+            CropDto cropDto = cropService.getCropByCode(cropCode);
+            if (cropDto == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(cropDto, HttpStatus.OK);
+        } catch (CropNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PatchMapping(value = "/{cropCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

@@ -69,4 +69,14 @@ public class CropServiceImpl implements CropService {
             throw new CropNotFoundException("Cannot save crop");
         }
     }
+
+    @Override
+    public CropDto getCropByCode(String cropCode) {
+        Optional<CropEntity> cropEntity = cropDao.findById(cropCode);
+        if (cropEntity.isPresent()) {
+            return mapping.convertToCropDTO(cropEntity.get()); // Convert to DTO and return
+        } else {
+            throw new DataPersistFailedException("Crops not found"); // Or a custom exception if needed
+        }
+    }
 }
