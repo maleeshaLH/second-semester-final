@@ -53,7 +53,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" id="vehicleCode">
+                        <!-- <input type="hidden" id="vehicleCode"> -->
+                        <div class="mb-3">
+                            <label for="vehicleCode" class="form-label">Vehicle code</label>
+                            <input type="text" class="form-control" id="vehicleCode" required>
+                        </div>
                         <div class="mb-3">
                             <label for="licensePlateNumber" class="form-label">License Plate Number</label>
                             <input type="text" class="form-control" id="licensePlateNumber" required>
@@ -99,13 +103,15 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success" id="saveButton">Save</button>
+                        <button type="button" class="btn btn-primary" id="updateButton" style="display: none;">Update</button>
+
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <script src="/try/try.js"></script>
+    <script src="/js/vehicle.js"></script>
     <script src="/js/loader.js"></script>
     <script src="/js/sidebarController.js"></script>
 </body>
