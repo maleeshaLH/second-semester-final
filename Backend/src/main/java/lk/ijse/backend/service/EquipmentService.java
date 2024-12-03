@@ -12,4 +12,6 @@ public interface EquipmentService {
     void updateEquipment(String equipmentId, EquipmentDto equipmentDto);
 
     void saveEquipment(EquipmentDto equipmentDto);
+
+    EquipmentDto geteQuipmentByCode(String equipmentCode);
 }

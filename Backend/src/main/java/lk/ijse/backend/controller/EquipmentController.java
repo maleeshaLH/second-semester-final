@@ -2,6 +2,7 @@ package lk.ijse.backend.controller;
 
 import lk.ijse.backend.dto.impl.EquipmentDto;
 import lk.ijse.backend.dto.impl.StaffDto;
+import lk.ijse.backend.dto.impl.VehicleDto;
 import lk.ijse.backend.exception.DataPersistFailedException;
 import lk.ijse.backend.exception.StaffNotFoundException;
 import lk.ijse.backend.service.EquipmentService;
@@ -27,6 +28,7 @@ public class EquipmentController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> saveEquipment(@RequestBody EquipmentDto equipmentDto) {
         try {
+            System.out.printf("" + equipmentDto.getFieldCode());
             equipmentService.saveEquipment(equipmentDto);
             return new ResponseEntity<>( HttpStatus.CREATED);
         } catch (DataPersistFailedException e) {
@@ -70,6 +72,21 @@ public class EquipmentController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EquipmentDto> getAllEquipment(){
         return equipmentService.getAllEquipment();
+    }
+
+    @GetMapping("/{equipmentCode}")
+    public ResponseEntity<EquipmentDto> getequipments(@PathVariable("equipmentCode") String equipmentCode) {
+        try {
+            EquipmentDto equipmentDto = equipmentService.geteQuipmentByCode(equipmentCode);
+            if (equipmentDto == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(equipmentDto, HttpStatus.OK);
+        } catch (DataPersistFailedException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

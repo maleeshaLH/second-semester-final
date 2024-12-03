@@ -7,6 +7,7 @@ import lk.ijse.backend.dto.impl.EquipmentDto;
 import lk.ijse.backend.entity.impl.EquipmentEntity;
 import lk.ijse.backend.entity.impl.FiledEntity;
 import lk.ijse.backend.entity.impl.StaffEntity;
+import lk.ijse.backend.entity.impl.VehicleEntity;
 import lk.ijse.backend.exception.DataPersistFailedException;
 import lk.ijse.backend.service.EquipmentService;
 import lk.ijse.backend.util.Mapping;
@@ -51,7 +52,6 @@ public class EquipmentServiceImpl implements EquipmentService {
 
         Optional<EquipmentEntity> tmp = equipmentDao.findById(equipmentId);
         if(tmp.isEmpty()){
-            System.out.printf("01");
             throw new DataPersistFailedException("Equipment not found");
 
         }
@@ -75,9 +75,19 @@ public class EquipmentServiceImpl implements EquipmentService {
 
         EquipmentEntity equipmentEntity =
                 equipmentDao.save(mapping.convertToEquipmentEntity(equipmentDto));
-
+        System.out.printf("ser"+equipmentEntity.getFields());
         if (equipmentEntity == null) {
             throw new DataPersistFailedException("Cannot save staff");
+        }
+    }
+
+    @Override
+    public EquipmentDto geteQuipmentByCode(String equipmentCode) {
+        Optional<EquipmentEntity> equipmentEntity = equipmentDao.findById(equipmentCode);
+        if (equipmentEntity.isPresent()) {
+            return mapping.convertToEquipmentDTO(equipmentEntity.get()); // Convert to DTO and return
+        } else {
+            throw new DataPersistFailedException("Equipment not found"); // Or a custom exception if needed
         }
     }
 }
